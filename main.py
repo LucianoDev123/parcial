@@ -37,3 +37,12 @@ def crear_mensaje(mensaje:Mensaje):
     contador_id += 1
     return nuevo_mensaje
 
+# PUT para actualizar mensajes
+@app.put("/mensajes/{mensaje_id}", response_model=MensajeConID)
+def actualizar_mensaje(mensaje_id: int, mensaje_actualizado: Mensaje):
+    for i, mensaje in enumerate(mensajes):
+        if mensaje.id == mensaje_id:
+            mensajes[i] = MensajeConID(id=mensaje_id, **mensaje_actualizado.dict())
+            return mensajes[i]
+    raise HTTPException(status_code=404, detail= "Mensaje no encontrado para actualizar")
+
