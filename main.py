@@ -46,3 +46,12 @@ def actualizar_mensaje(mensaje_id: int, mensaje_actualizado: Mensaje):
             return mensajes[i]
     raise HTTPException(status_code=404, detail= "Mensaje no encontrado para actualizar")
 
+#DELETE para eliminar un mensaje
+@app.delete("/mensajes/{mensaje_id}")
+def eliminar_mensaje(mensaje_id: int):
+    for mensaje in mensajes:
+        if mensaje.id == mensaje_id:
+            mensajes.remove(mensaje)
+            return {"mensaje": "Mensaje eliminado"}
+    raise HTTPException(status_code=404, detail="Mensaje no encontrado para eliminar")
+
