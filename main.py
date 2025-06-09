@@ -27,3 +27,13 @@ def obtener_mensaje(mensaje_id: int):
             return mensaje
     raise HTTPException(status_code=404, detail="No hay mensajes para mostrar")
 
+#POST Para agregr mensajes
+
+@app.post("/mensajes", response_model=MensajeConID, status_code=201)
+def crear_mensaje(mensaje:Mensaje):
+    global contador_id
+    nuevo_mensaje = MensajeConID(id=contador_id, **mensaje.dict())
+    mensajes.append(nuevo_mensaje)
+    contador_id += 1
+    return nuevo_mensaje
+
